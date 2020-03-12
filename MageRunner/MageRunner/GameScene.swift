@@ -11,23 +11,68 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var entities = [GKEntity]()
-    var graphs = [String : GKGraph]()
+    var movingObject: SKNode!
     
-    private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
 
-        self.lastUpdateTime = 0
-        
         // Get label node from scene and store it for use later
+        /*
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
             label.alpha = 0.0
             label.run(SKAction.fadeIn(withDuration: 2.0))
         }
+        */
+        
+        movingObject = SKNode()
+        self.addChild(movingObject)
+        
+        // background
+        let backgroundTexture = SKTexture(imageNamed: "winterBackground")
+        let moveBackgroundSprite = SKAction.moveBy(x: -backgroundTexture.size().width * 2.0, y: 0, duration: TimeInterval(0.25 * backgroundTexture.size().width))
+        let resetBackgroundSprite = SKAction.moveBy(x: backgroundTexture.size().width * 2.0, y: 0, duration: 0.0)
+        let moveBackgroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveBackgroundSprite, resetBackgroundSprite]))
+        
+        for i in 0 ... 6 {
+            let sprite = SKSpriteNode(texture: backgroundTexture)
+            sprite.zPosition = -1000
+            sprite.setScale(0.4)
+            sprite.position = CGPoint(x: CGFloat(i) * sprite.size.width, y: 0)
+            sprite.run(moveBackgroundSpritesForever)
+            movingObject.addChild(sprite)
+        }
+        
+        // trees
+        let treesTexture = SKTexture(imageNamed: "winterTrees")
+        let moveTreesSprite = SKAction.moveBy(x: -treesTexture.size().width * 2.0, y: 0, duration: TimeInterval(0.08 * treesTexture.size().width))
+        let resetTreesSprite = SKAction.moveBy(x: treesTexture.size().width * 2.0, y: 0, duration: 0.0)
+        let moveTreesSpritesForever = SKAction.repeatForever(SKAction.sequence([moveTreesSprite, resetTreesSprite]))
+        
+        for i in 0 ... 6 {
+            let sprite = SKSpriteNode(texture: treesTexture)
+            sprite.zPosition = -100
+            sprite.setScale(0.4)
+            sprite.position = CGPoint(x: CGFloat(i) * sprite.size.width, y: 0)
+            sprite.run(moveTreesSpritesForever)
+            movingObject.addChild(sprite)
+        }
+        
+        // ground
+        let groundTexture = SKTexture(imageNamed: "winterGround")
+        let moveGroundSprite = SKAction.moveBy(x: -groundTexture.size().width * 2.0, y: 0, duration: TimeInterval(0.02 * groundTexture.size().width))
+        let resetGroundSprite = SKAction.moveBy(x: groundTexture.size().width * 2.0, y: 0, duration: 0.0)
+        let moveGroundSpritesForever = SKAction.repeatForever(SKAction.sequence([moveGroundSprite, resetGroundSprite]))
+        
+        for i in 0 ... 5  {
+            let sprite = SKSpriteNode(texture: groundTexture)
+            sprite.setScale(0.4)
+            sprite.position = CGPoint(x: CGFloat(i) * sprite.size.width, y: 0)
+            sprite.run(moveGroundSpritesForever)
+            movingObject.addChild(sprite)
+        }
+        
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
@@ -69,10 +114,6 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
@@ -88,23 +129,5 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
-        self.lastUpdateTime = currentTime
-    }
+
 }
