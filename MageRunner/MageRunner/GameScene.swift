@@ -12,9 +12,18 @@ import GameplayKit
 class GameScene: SKScene {
     
     var movingObject: SKNode!
+    var player = Player()
 
     override func sceneDidLoad() {
         
+        player.load()
+        addChild(player.node)
+        
+        loadMap()
+        
+    }
+    
+    func loadMap() {
         
         movingObject = SKNode()
         self.addChild(movingObject)
@@ -62,6 +71,5 @@ class GameScene: SKScene {
             sprite.run(moveGroundSpritesForever)
             movingObject.addChild(sprite)
         }
-        
     }
 }
