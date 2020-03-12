@@ -15,6 +15,7 @@
 		6B4987C92419AD96001C2829 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4987C72419AD96001C2829 /* Main.storyboard */; };
 		6B4987CB2419AD99001C2829 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B4987CA2419AD99001C2829 /* Assets.xcassets */; };
 		6B4987CE2419AD99001C2829 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4987CC2419AD99001C2829 /* LaunchScreen.storyboard */; };
+		6B49881D2419D7E4001C2829 /* Player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6B49881C2419D7E4001C2829 /* Player.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		6B4987CA2419AD99001C2829 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B4987CD2419AD99001C2829 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B4987CF2419AD99001C2829 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B49881C2419D7E4001C2829 /* Player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Player.atlas; path = ../../../../Player.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				6B4987CA2419AD99001C2829 /* Assets.xcassets */,
 				6B4987CC2419AD99001C2829 /* LaunchScreen.storyboard */,
 				6B4987CF2419AD99001C2829 /* Info.plist */,
+				6B49881C2419D7E4001C2829 /* Player.atlas */,
 			);
 			path = MageRunner;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B49881D2419D7E4001C2829 /* Player.atlas in Resources */,
 				6B4987C92419AD96001C2829 /* Main.storyboard in Resources */,
 				6B4987C02419AD96001C2829 /* GameScene.sks in Resources */,
 				6B4987CB2419AD99001C2829 /* Assets.xcassets in Resources */,
