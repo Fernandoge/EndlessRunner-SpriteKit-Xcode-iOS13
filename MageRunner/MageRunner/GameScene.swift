@@ -11,20 +11,21 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var physicsDelegate = PhysicsDetection()
     var movingObject: SKNode!
-    var player = Player()
-
+    var player = Player(imageNamed: "idle1_1")
+    var touching = false
+    
     override func sceneDidLoad() {
-        
-        player.load()
-        addChild(player.node)
+        self.physicsWorld.contactDelegate = physicsDelegate
         
         loadMap()
         
+        player.load()
+        addChild(player)
     }
     
     func loadMap() {
-        
         movingObject = SKNode()
         self.addChild(movingObject)
         
@@ -66,10 +67,34 @@ class GameScene: SKScene {
         
         for i in 0 ... 5  {
             let sprite = SKSpriteNode(texture: groundTexture)
+            sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+            sprite.physicsBody?.isDynamic = false
+            sprite.physicsBody?.categoryBitMask = ColliderType.GROUND
+            sprite.physicsBody?.contactTestBitMask = ColliderType.PLAYER
             sprite.setScale(0.4)
-            sprite.position = CGPoint(x: CGFloat(i) * sprite.size.width, y: 0)
+            sprite.position = CGPoint(x: CGFloat(i) * sprite.size.width, y: -190)
             sprite.run(moveGroundSpritesForever)
             movingObject.addChild(sprite)
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touching = true
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touching = false
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if touching {
+            player.jump()
+        } else if !player.isGrounded && player.isJumping {
+            player.isJumping = false
+        }
+        
+        if (player.physicsBody?.velocity.dy)! < player.fallingVelocity && player.position.y > 10 {
+            player.fall()
         }
     }
 }
